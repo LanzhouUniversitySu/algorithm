@@ -1,0 +1,71 @@
+#include "iostream"
+#include "math.h"
+using namespace std;
+
+const int N = 1e8;
+
+double get_f(double *beta,double x,int size){
+    double f = beta[0];
+    for(int j=1;j<size;j++){
+        f += beta[j] * pow(x,j);
+    }
+    return f;
+}
+
+
+
+// x*3 - 6*x^2 + 11*x -6 = 0
+/* 测试数据1
+3
+-1 2
+1 -6 11 -6
+*/
+
+
+// x^4 - 10*x^3 + 35*x^2 - 50*x + 24 = 0
+/* 测试数据 2
+4
+0 5
+1 -10 35 -50 24
+ * */
+
+
+/*在一定范围内寻找多项式方程的解*/
+int main(){
+
+    cout<<"请输入多项式方程的最高次："<<endl;
+    int n;
+    cin >> n;
+
+    int size = n + 1;
+
+    /* 在[lb,ub]寻找解 */
+    double lb,ub;
+    cout<<"请输入解的有效范围："<<endl;
+    cin>>lb>>ub;
+
+
+    cout<<"请输入系数向量："<<endl;
+    double *beta = new double[size];
+    for(int i=0; i < size; i++)
+        cin>>beta[size - 1 - i];
+
+    /*x_l,x(k-1);x_c,x(k)*/
+    /*lr 学习率*/
+    /*eps 允许误差*/
+    double x_l,x_c,lr = 1e-3,eps = 1e-8;
+    x_l = ub;
+    int cnt = 0;
+    for(int i=0;i<N;i++){
+        double s = lr * get_f(beta, x_l, size);
+        x_c = x_l - abs(s);
+        x_l = x_c;
+        if(abs(get_f(beta, x_l, size)) <= eps){
+            cout<<"*"<<x_c<<endl;
+            x_l -= 10*eps;
+        }
+        if(cnt>>size || x_c<=lb) break;
+    }
+    cout<<cnt;
+    return 0;
+}
