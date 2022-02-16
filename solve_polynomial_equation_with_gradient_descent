@@ -2,6 +2,8 @@
 #include "math.h"
 using namespace std;
 
+
+//fixme 迭代次数过少
 /*最大循环次数*/
 const int N = 1e8;
 
@@ -56,6 +58,8 @@ int main(){
 
     cout<<"processing..."<<endl;
 
+
+    //fixme 学习率应该随范围大小自适应变化
     /*x_l,x(k-1);x_c,x(k)*/
     /*lr 学习率*/
     /*eps 允许误差*/
