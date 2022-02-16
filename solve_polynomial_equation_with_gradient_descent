@@ -27,7 +27,7 @@ double get_f(double *beta,double x,int size){
 // x^4 - 10*x^3 + 35*x^2 - 50*x + 24 = 0
 /* 测试数据 2
 4
-0 5
+0 1000
 1 -10 35 -50 24
  * */
 
@@ -54,10 +54,12 @@ int main(){
     for(int i=0; i < size; i++)
         cin>>beta[size - 1 - i];
 
+    cout<<"processing..."<<endl;
+
     /*x_l,x(k-1);x_c,x(k)*/
     /*lr 学习率*/
     /*eps 允许误差*/
-    double x_l,x_c,lr = 1e-3,eps = 1e-8;
+    double x_l,x_c,lr = 1e-6,eps = 1e-8;
 
     /*从上界开始*/
     x_l = ub;
@@ -67,9 +69,9 @@ int main(){
 
 
     for(int i=0;i<N;i++){
-        double s = lr * get_f(beta, x_l, size);
-        /*向右搜索*/
-        x_c = x_l - abs(s);
+
+        /*向左搜索*/
+        x_c = x_l - abs(lr * get_f(beta, x_l, size));
 
         /*记录前一次迭代的值*/
         x_l = x_c;
